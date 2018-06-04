@@ -20,6 +20,8 @@ import java.util.List;
 @WebServlet("/HelloForm")
 public class HelloForm extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    public static String attendanceTime = "Defaut";
+    public static String attendanceName = "Defaut";
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -35,11 +37,11 @@ public class HelloForm extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         JSONObject json = JsonReader.receivePost(request);
         String time = json.getString("time");
+        attendanceTime = time;
         System.out.print(time+"hahaha");
-        System.out.print("hahaha");
         String str = json.getString("picture");
         byte[] picture  = Base64.getMimeDecoder().decode(str);
-        File f = new File("/Users/xiaozhu/Desktop/FaceRecognition/unknown.jpg") ;
+        File f = new File("/Users/xiaozhu/Desktop/FaceRecognition/unknown.jpg");
         try{
             FileImageOutputStream imageOutput = new FileImageOutputStream(f);
             imageOutput.write(picture, 0, picture.length);
@@ -65,6 +67,7 @@ public class HelloForm extends HttpServlet {
                 sb.append(line).append("\n");
             }
             name = sb.toString();
+            attendanceName = name;
             System.out.print("result:"+name);
         } catch (Exception e) {
             e.printStackTrace();
